@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://khlvaiqkcwci"]
+
+[ext_resource type="Script" path="res://scripts/Rejouer.gd" id="1_j1ss4"]
+[ext_resource type="Script" path="res://scripts/Quitter.gd" id="2_03gk3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_um7al"]
+font_size = 25
+
+[node name="GameOverUI" type="CanvasLayer"]
+
+[node name="GameOverlbl" type="Label" parent="."]
+offset_left = 91.0
+offset_top = 47.0
+offset_right = 227.0
+offset_bottom = 82.0
+text = "Game Over"
+label_settings = SubResource("LabelSettings_um7al")
+
+[node name="Rejouer" type="Button" parent="."]
+custom_minimum_size = Vector2(1, 1)
+offset_left = 90.0
+offset_top = 93.0
+offset_right = 158.0
+offset_bottom = 124.0
+text = "Rejouer"
+script = ExtResource("1_j1ss4")
+
+[node name="Quitter" type="Button" parent="."]
+offset_left = 164.0
+offset_top = 93.0
+offset_right = 228.0
+offset_bottom = 124.0
+text = "Quitter"
+script = ExtResource("2_03gk3")
+
+[connection signal="pressed" from="Rejouer" to="Rejouer" method="_on_pressed"]
+[connection signal="pressed" from="Quitter" to="Quitter" method="_on_pressed"]

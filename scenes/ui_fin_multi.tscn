@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://33uyodii3m4j"]
+
+[node name="UI_fin_multi" type="CanvasLayer"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 95.0
+offset_top = 63.0
+offset_right = 224.0
+offset_bottom = 86.0
+text = "Course terminée"

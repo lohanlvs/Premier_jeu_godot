@@ -1,0 +1,170 @@
+[gd_scene load_steps=13 format=3 uid="uid://c0pit8brjpskp"]
+
+[ext_resource type="Script" path="res://scenes/oeil.gd" id="1_akqh5"]
+[ext_resource type="Texture2D" uid="uid://uu3x2eg4iqhk" path="res://assets/textures/Oeil/Flight_oeil.png" id="1_etgmb"]
+[ext_resource type="Script" path="res://scenes/FiniteStateMachine.gd" id="3_cjun8"]
+[ext_resource type="Script" path="res://scenes/Idle.gd" id="4_efpk7"]
+[ext_resource type="Script" path="res://scenes/Shoot.gd" id="5_4rg26"]
+[ext_resource type="Script" path="res://scenes/Follow.gd" id="6_08x74"]
+[ext_resource type="PackedScene" uid="uid://b6bmndc6ahekx" path="res://scenes/bullet.tscn" id="6_howqf"]
+[ext_resource type="Script" path="res://scenes/Dash.gd" id="7_5ykrk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m1r70"]
+radius = 108.0
+height = 220.0
+
+[sub_resource type="Animation" id="Animation_rrgdr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_etgmb")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ob03f"]
+resource_name = "idle"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_etgmb")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6l68d"]
+_data = {
+"RESET": SubResource("Animation_rrgdr"),
+"idle": SubResource("Animation_ob03f")
+}
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_akqh5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-25, -28)
+scale = Vector2(4.865, 5)
+texture = ExtResource("1_etgmb")
+flip_h = true
+hframes = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-43, -28)
+shape = SubResource("CapsuleShape2D_m1r70")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6l68d")
+}
+
+[node name="FiniteStateMachine" type="Node2D" parent="."]
+script = ExtResource("3_cjun8")
+
+[node name="Idle" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("4_efpk7")
+
+[node name="Shoot" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("5_4rg26")
+bullet_node = ExtResource("6_howqf")
+
+[node name="Timer" type="Timer" parent="FiniteStateMachine/Shoot"]
+wait_time = 0.75
+
+[node name="Follow" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("6_08x74")
+
+[node name="Dash" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("7_5ykrk")
+
+[node name="Timer" type="Timer" parent="FiniteStateMachine/Dash"]
+wait_time = 1.5
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[connection signal="timeout" from="FiniteStateMachine/Shoot/Timer" to="FiniteStateMachine/Shoot" method="_on_timer_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/Dash/Timer" to="FiniteStateMachine/Dash" method="_on_timer_timeout"]

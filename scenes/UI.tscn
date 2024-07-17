@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://byiiatj2tpv17"]
+
+[ext_resource type="Script" path="res://scripts/UI.gd" id="1_ai0ef"]
+[ext_resource type="Texture2D" uid="uid://utdlohvsbfqb" path="res://assets/textures/Health_Empty.png" id="2_i5kww"]
+[ext_resource type="Texture2D" uid="uid://dts6gj67tr04u" path="res://assets/textures/Health_Fill.png" id="3_xil7j"]
+[ext_resource type="Texture2D" uid="uid://en3b5uxtxfb2" path="res://assets/textures/Heart_Orange_1.png" id="4_3p2yx"]
+[ext_resource type="Texture2D" uid="uid://citbai1v8m6l3" path="res://assets/textures/staticCoin.png" id="5_uobxo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bdasi"]
+font_size = 10
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_ai0ef")
+
+[node name="HPbar" type="TextureProgressBar" parent="."]
+offset_right = 68.0
+offset_bottom = 16.0
+value = 100.0
+texture_under = ExtResource("2_i5kww")
+texture_progress = ExtResource("3_xil7j")
+
+[node name="Heart_Img" type="TextureRect" parent="."]
+offset_left = -1.0
+offset_right = 17.0
+offset_bottom = 16.0
+texture = ExtResource("4_3p2yx")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 1.0
+offset_top = 17.0
+offset_right = 17.0
+offset_bottom = 33.0
+texture = ExtResource("5_uobxo")
+
+[node name="Coin_label" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 29.0
+offset_bottom = 32.0
+text = "0"
+label_settings = SubResource("LabelSettings_bdasi")
